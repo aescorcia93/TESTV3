@@ -1,25 +1,24 @@
 import { createWebHistory, createRouter } from "vue-router";
-import Login from "@/components/Login.vue";
-import Dashboard from "@/components/Dashboard.vue";
 import Custormerlist from "@/components/Customerlist.vue";
-
+import Customersettings from "@/components/Customersettings.vue";
 
 const routes = [
+    {
+        path: "/",
+        name: "home",
+        component: Custormerlist
+    },
     {
         path: "/customers",
         name: "customerlist",
         component: Custormerlist,
     },
     {
-        path: "/login",
-        name: "login",
-        component: Login,
+        path: "/customers/:id",
+        name: "customeredit",
+        component: Customersettings,
     },
-    {
-        path: "/dashboard",
-        name: "Dashboard",
-        component: Dashboard,
-    },
+
 ];
 
 const router = createRouter({

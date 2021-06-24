@@ -1,49 +1,7 @@
 <template>
 
-  <div class="row">
-    {{ dataRows }}
-  <Button type="button" class="bg-success"
-          data-bs-toggle="modal"
-          data-bs-target="#ModalSave"
-  >Add a New Customer Here!!</Button>
-  </div>
-  <div id="app" class="container">
-    <table class="table table-bordered">
-      <th>Id</th>
-      <th>Name</th>
-      <th>LastName</th>
-      <th>Gender</th>
-      <th>Date Of Birth</th>
-      <th>CELLPHONE -     HOME PHONE -      OFFICE PHONE</th>
-      <th>Amount</th>
-      <tr v-for="(row,index) in dataRows" :key="index">
-        <td v-for="(value, index) in row" :key="index">
-         {{ value }}
+<h5 class="modal-title" id="exampleModalLabel">Eddit Customer</h5>
 
-        </td>
-
-        <td height="50px">
-          <Button class="bg-danger" @click="other(row)">Delete</Button>
-
-          <Button type="button" @click="PasstoModal(row)" class="bg-info"
-                  data-bs-toggle="modal"
-                  data-bs-target="#ModalEdit">Edit</Button>
-        </td>
-      </tr>
-
-    </table>
-
-  </div>
-
-
-  <!-- Modal for Save customers -->
-  <div class="modal fade" id="ModalSave" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Save Customer</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
         <div class="modal-body row" >
           <label style="text-align: left" for="Id">Id: </label>
           <input disabled="true" type="text" placeholder="Customer Id" id="Id">
@@ -86,79 +44,22 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button @click="save" type="button" class="btn btn-primary">Save</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
-
-
-  <!-- Modal for Edit customers -->
-  <div class="modal fade" id="ModalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel2">Edit Customer</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body row" >
-          <label style="text-align: left" for="Id">Id: </label>
-          <input v-model="Enewid" disabled="true" type="text" placeholder="Customer Id" id="Id2">
-
-          <label style="text-align: left" for="TName">Name: </label>
-          <input v-model="Enewname" type="text" placeholder="Insert Name" id="TName2">
-
-          <label style="text-align: left" for="TLast">Last Name: </label>
-          <input v-model="Enewlastname" class="mb-2"  type="text" placeholder="Insert Last Name" id="TLast2">
-
-          <div class="row">
-            <div class="dropdown d-inline-block mb-2">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton12" data-bs-toggle="dropdown" aria-expanded="false">
-                Select your gender
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" @click="newgenE">Female</a></li>
-                <li><a class="dropdown-item" @click="newgenE">Male</a></li>
-              </ul>
-            </div>
-            <input class="d-inline-block" type="text" disabled="true" v-model="Enewgender" placeholder="Non Gender Selected" id="genderSave2">
-          </div>
-
-          <label style="text-align: left" for="DOB">DOB: </label>
-          <input v-model="Enewdob" type="text" placeholder="Insert Date Of Birth" id="DOB2">
-
-          <label style="text-align: left" for="ph1">CellPhone: </label>
-          <input v-model="Enewphone1" type="text" placeholder="Insert Cell Phone Number" id="ph12">
-
-          <label style="text-align: left" for="ph2">Home Phone: </label>
-          <input v-model="Enewphone2" type="text" placeholder="Insert Home Phone Number" id="ph22">
-
-          <label style="text-align: left" for="ph3">Office Phone: </label>
-          <input v-model="Enewphone3" type="text" placeholder="Insert Office Phone Number" id="ph32">
-
-          <label style="text-align: left" for="Damount">Office Phone: </label>
-          <input v-model="Enewamount" type="text" placeholder="Insert Debt Amount" id="Damount2">
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button @click="update" data-bs-dismiss="modal" type="button" class="btn btn-primary">Save Changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
 </template>
 
 <script>
-import {useStore} from "vuex";
-import {ref,computed} from "vue"
+//import {useStore} from "vuex";
+import {ref} from "vue"
 
 export default {
 setup(){
-const store = useStore();
- store.dispatch('Initialdatatable');
- const dataRows= computed(()=> store.state.dataRows);
+//const store = useStore();
+
+//const records = computed(()=> store.state.datostabla);
+
+const dataRows= ref([]);
+
 
 //variables to save
   const newid= ref("");
@@ -200,7 +101,7 @@ function save(){
     DebtAmount:newamount.value
   }
   mynewarray.push(newitem);
-  store.dispatch('Finaldata',mynewarray);
+  dataRows.value=mynewarray;
 }
 function update(){
   const newitem = {
@@ -228,9 +129,52 @@ function  other(row){
   console.log(row.name,row.age);
   let myarray = dataRows.value;
   myarray.splice(row.index, 1);
-  store.dispatch('Finaldata',myarray);
+  dataRows.value=myarray;
 }
+function doStuff() {
+    dataRows.value = [
+      {
+        Id: 1,
+        FirstName: "Jhon",
+        LastName: "Doe",
+        Gender:"Male",
+        DOB:"May 4th, 1990",
+        PhoneNumbers: [
+          {Number:"(123) 456 789"},
+          {Number:"(321) 444 555"},
+          {Number:"(317) 444 555"}
+        ],
+        DebtAmount:50000
+      },
+      {
+        Id: 2,
+        FirstName: "Marcos",
+        LastName: "Perez",
+        Gender:"Male",
+        DOB:"Jun 9th, 2001",
+        PhoneNumbers: [
+          {Number:"(123) 214 444"},
+          {Number:"(321) 333 555"},
+          {Number:"(317) 222 555"}
+        ],
+        DebtAmount:75000
+      },
+      {
+        Id: 3,
+        FirstName: "Mary",
+        LastName: "Alens",
+        Gender:"Female",
+        DOB:"Dec 14th, 1999",
+        PhoneNumbers: [
+          {Number:"(123) 111 300"},
+          {Number:"(321) 557 555"},
+          {Number:"(317) 474 515"}
+        ],
+        DebtAmount:10550
+      }
+    ];
 
+  }
 function newgen(){
   if (newgender.value=="Male"){
     newgender.value="Female";
@@ -284,7 +228,7 @@ function newgenE(){
      Enewphone3,
      Enewamount,
 
-
+     doStuff,
      newgen,
      newgenE,
      PasstoModal,
