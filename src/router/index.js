@@ -1,8 +1,15 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Login from "@/components/Login.vue";
 import Dashboard from "@/components/Dashboard.vue";
+import Custormerlist from "@/components/Customerlist.vue";
+
 
 const routes = [
+    {
+        path: "/customers",
+        name: "customerlist",
+        component: Custormerlist,
+    },
     {
         path: "/login",
         name: "login",

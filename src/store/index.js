@@ -3,6 +3,7 @@ import {createStore} from 'vuex';
 
 const store = createStore({
 state:{
+    customers:[],
     stateExample:[],
     titleExample:"MI FIRST STATE",
     loginuserrecord:[],
